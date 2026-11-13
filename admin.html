@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard | MiniKitchen Management Portal</title>
+  <meta name="description" content="MiniKitchen Admin Dashboard - Manage table reservations, approve/reject requests, and update menu catalog availability in real-time.">
+
+  <!-- Favicon / Brand Logo (Browser Tab) -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23EB5757'/%3E%3Cstop offset='100%25' stop-color='%23E24747'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='16' fill='url(%23g)'/%3E%3Cg transform='translate(15.8,15) scale(0.0664)'%3E%3Cpath fill='%23FFFFFF' d='M184 0c13.3 0 24 10.7 24 24v104c0 35.3-28.7 64-64 64H128v296c0 13.3-10.7 24-24 24s-24-10.7-24-24V192H64C28.7 192 0 163.3 0 128V24C0 10.7 10.7 0 24 0S48 10.7 48 24v80h16V24c0-13.3 10.7-24 24-24s24 10.7 24 24v80h16V24c0-13.3 10.7-24 24-24s24 10.7 24 24v80h16V24c0-13.3 10.7-24 24-24zM384 0c57.4 0 104 46.6 104 104 0 46.6-30.8 86-72.9 98.7V488c0 13.3-10.7 24-24 24s-24-10.7-24-24V202.7C325.2 190 294.4 150.6 294.4 104 294.4 46.6 341 0 384 0z'/%3E%3C/g%3E%3C/svg%3E">
+  <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
+  <link rel="alternate icon" type="image/png" sizes="32x32" href="assets/images/favicon-32x32.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#EB5757">
+
+  <!-- Google Fonts: Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <!-- MiniKitchen Stylesheets -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/admin.css?v=2026.5">
+  <link rel="stylesheet" href="css/responsive.css?v=2026.5">
+</head>
+<body>
+
+  <!-- =========================================================================
+       ADMIN AUTHENTICATION GATEWAY (LOGIN & REGISTRATION)
+       ========================================================================= -->
+  <div class="admin-auth-overlay" id="adminAuthOverlay">
+    <div class="admin-auth-card">
+      <div class="auth-card-header">
+        <a href="index.html" class="brand-logo" aria-label="MiniKitchen Home">
+          <div class="logo-icon"><i class="fa-solid fa-utensils"></i></div>
+          <span>Mini<span class="logo-accent">Kitchen</span></span>
+        </a>
+        <h2>Staff &amp; Management Portal</h2>
+        <p>Restricted access for verified restaurant personnel only.</p>
+      </div>
+
+      <!-- Segmented Switcher -->
+      <div class="auth-tab-switcher">
+        <button type="button" class="auth-tab-btn active" id="tabBtnLogin" onclick="window.switchAuthTab('login')">
+          <i class="fa-solid fa-lock" style="margin-right: 6px;"></i> Sign In
+        </button>
+        <button type="button" class="auth-tab-btn" id="tabBtnRegister" onclick="window.switchAuthTab('register')">
+          <i class="fa-solid fa-user-plus" style="margin-right: 6px;"></i> Register Staff
+        </button>
+      </div>
+
+      <!-- Notification Alerts -->
+      <div class="auth-alert" id="authAlertBox"></div>
+
+      <!-- 1. SIGN IN FORM -->
+      <form id="formAdminLogin">
+        <div class="auth-form-group form-group">
+          <label for="loginUsername" class="form-label">Username or Email <span class="req-indicator">*</span></label>
+          <div class="input-with-icon">
+            <i class="fa-regular fa-user"></i>
+            <input type="text" id="loginUsername" class="form-control" placeholder="e.g. admin or staff@minikitchen.lk" required autocomplete="username">
+          </div>
+        </div>
+
+        <div class="auth-form-group form-group">
+          <label for="loginPassword" class="form-label">Password <span class="req-indicator">*</span></label>
+          <div class="input-with-icon auth-password-wrapper">
+            <i class="fa-solid fa-key"></i>
+            <input type="password" id="loginPassword" class="form-control" placeholder="Enter your password" required autocomplete="current-password">
+            <button type="button" class="btn-toggle-pwd" onclick="window.togglePasswordVisibility('loginPassword', this)" title="Show/Hide Password">
+              <i class="fa-regular fa-eye"></i>
+            </button>
+          </div>
+        </div>
+
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 22px; font-size: 0.85rem;">
+          <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; color: var(--text-secondary); font-weight: 600;">
+            <input type="checkbox" id="loginRememberMe" checked style="accent-color: var(--primary-coral);">
+            <span>Remember this device</span>
+          </label>
+        </div>
+
+        <button type="submit" class="btn btn-primary" id="btnLoginSubmit" style="width: 100%; height: 46px; margin-top: 6px;">
+          <i class="fa-solid fa-arrow-right-to-bracket"></i>
+          <span>Sign In to Dashboard</span>
+        </button>
+      </form>
+
+      <!-- 2. REGISTRATION FORM -->
+      <form id="formAdminRegister" style="display: none;">
+        <div class="auth-form-group form-group">
+          <label for="regFullName" class="form-label">Full Name <span class="req-indicator">*</span></label>
+          <div class="input-with-icon">
+            <i class="fa-regular fa-id-badge"></i>
+            <input type="text" id="regFullName" class="form-control" placeholder="e.g. Niroshan Perera" required>
+          </div>
+        </div>
+
+        <div class="auth-form-group form-group">
+          <label for="regUsername" class="form-label">Username <span class="req-indicator">*</span></label>
+          <div class="input-with-icon">
+            <i class="fa-regular fa-user"></i>
+            <input type="text" id="regUsername" class="form-control" placeholder="e.g. niroshan_chef" required autocomplete="username">
+          </div>
+        </div>
+
+        <div class="auth-form-group form-group">
+          <label for="regEmail" class="form-label">Email Address <span class="req-indicator">*</span></label>
+          <div class="input-with-icon">
+            <i class="fa-regular fa-envelope"></i>
+            <input type="email" id="regEmail" class="form-control" placeholder="e.g. niroshan@minikitchen.lk" required autocomplete="email">
+          </div>
+        </div>
+
+        <div class="auth-form-group form-group">
+          <label for="regRole" class="form-label">Staff Role <span class="req-indicator">*</span></label>
+          <select id="regRole" class="form-control" required>
+            <option value="Head Chef">Head Chef</option>
+            <option value="Manager">Restaurant Manager</option>
+            <option value="Host">Host / Reception</option>
+            <option value="Staff">Floor Staff</option>
+            <option value="Owner">Owner / Executive</option>
+          </select>
+        </div>
+
+        <div class="auth-form-group form-group">
+          <label for="regPassword" class="form-label">Password <span class="req-indicator">*</span></label>
+          <div class="input-with-icon auth-password-wrapper">
+            <i class="fa-solid fa-lock"></i>
+            <input type="password" id="regPassword" class="form-control" placeholder="Min. 6 characters" required autocomplete="new-password">
+            <button type="button" class="btn-toggle-pwd" onclick="window.togglePasswordVisibility('regPassword', this)" title="Show/Hide Password">
+              <i class="fa-regular fa-eye"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="auth-form-group form-group">
+          <label for="regSecurityPasscode" class="form-label">Restaurant Staff PIN <span class="req-indicator">*</span></label>
+          <div class="input-with-icon auth-password-wrapper">
+            <i class="fa-solid fa-shield-halved"></i>
+            <input type="password" id="regSecurityPasscode" class="form-control" placeholder="Enter restaurant authorization PIN" required autocomplete="off">
+            <button type="button" class="btn-toggle-pwd" onclick="window.togglePasswordVisibility('regSecurityPasscode', this)" title="Show/Hide PIN" aria-label="Toggle PIN visibility">
+              <i class="fa-regular fa-eye"></i>
+            </button>
+          </div>
+          <span style="font-size: 0.74rem; color: var(--text-muted); margin-top: 4px; display: block;">
+            Contact restaurant management for your internal staff PIN.
+          </span>
+        </div>
+
+        <button type="submit" class="btn btn-primary" id="btnRegisterSubmit" style="width: 100%; height: 46px; margin-top: 6px;">
+          <i class="fa-solid fa-user-check"></i>
+          <span>Create Staff Account</span>
+        </button>
+      </form>
+
+      <div class="auth-footer-help">
+        <a href="index.html" style="color: var(--text-secondary); text-decoration: underline;">
+          <i class="fa-solid fa-arrow-left" style="margin-right: 4px;"></i> Return to Public Restaurant Website
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="admin-app-layout" id="adminAppLayout" style="display: none;">
+    <!-- =======================================================================
+         SIDEBAR NAVIGATION
+         ======================================================================= -->
+    <aside class="admin-sidebar">
+      <div>
+        <!-- Sidebar Brand -->
+        <div class="sidebar-brand-box">
+          <a href="index.html" class="brand-logo">
+            <div class="logo-icon"><i class="fa-solid fa-utensils"></i></div>
+            <span>Mini<span class="logo-accent">Kitchen</span></span>
+          </a>
+          <span class="admin-badge-tag">Staff Portal</span>
+        </div>
+
+        <!-- Navigation Menu -->
+        <ul class="sidebar-nav-menu">
+          <li class="sidebar-nav-item">
+            <a href="#overview" class="sidebar-nav-link active" data-pane="paneOverview">
+              <i class="fa-solid fa-chart-pie"></i>
+              <span>Overview</span>
+            </a>
+          </li>
+
+          <li class="sidebar-nav-item">
+            <a href="#reservations" class="sidebar-nav-link" data-pane="paneReservations">
+              <i class="fa-solid fa-calendar-check"></i>
+              <span>Reservations</span>
+              <span class="sidebar-nav-badge" id="sidebarPendingBadge">3</span>
+            </a>
+          </li>
+
+          <li class="sidebar-nav-item">
+            <a href="#menu" class="sidebar-nav-link" data-pane="paneMenu">
+              <i class="fa-solid fa-burger"></i>
+              <span>Menu Catalog</span>
+            </a>
+          </li>
+
+          <li class="sidebar-nav-item">
+            <a href="#database" class="sidebar-nav-link" id="sidebarDbLink" onclick="window.openDbConfigModal(); return false;">
+              <i class="fa-solid fa-database" style="color: #3ECF8E;"></i>
+              <span>Supabase Database</span>
+            </a>
+          </li>
+
+          <li class="sidebar-nav-item">
+            <a href="index.html" class="sidebar-nav-link" target="_blank">
+              <i class="fa-solid fa-arrow-up-right-from-square"></i>
+              <span>Live Website</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Admin Profile & Account Settings -->
+      <div>
+        <div class="sidebar-profile-card">
+          <div class="profile-info" id="btnOpenEditProfile" role="button" tabindex="0" title="Click to view and edit your staff profile">
+            <div class="profile-avatar-monogram" id="sidebarProfileAvatar">YM</div>
+            <div class="profile-meta">
+              <div class="profile-name" id="sidebarProfileName">Yasas Manager</div>
+              <div class="profile-role" id="sidebarProfileRole">Restaurant Manager</div>
+            </div>
+            <div class="profile-edit-badge" title="Edit Profile">
+              <i class="fa-solid fa-pen-to-square"></i>
+            </div>
+          </div>
+          <button type="button" class="btn-sidebar-logout" id="btnAdminLogout" title="Sign Out of Portal" style="border: none; cursor: pointer;">
+            <i class="fa-solid fa-arrow-right-from-bracket"></i>
+          </button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Mobile Sidebar Backdrop Overlay -->
+    <div class="admin-sidebar-backdrop" id="adminSidebarBackdrop"></div>
+
+    <!-- =======================================================================
+         MAIN CONTENT WRAPPER
+         ======================================================================= -->
+    <main class="admin-main-wrap">
+      <!-- Top Bar -->
+      <header class="admin-top-bar">
+        <div class="top-bar-left">
+          <button class="admin-mobile-toggle" id="adminMobileSidebarToggle" aria-label="Toggle admin sidebar">
+            <i class="fa-solid fa-bars"></i>
+          </button>
+          <div class="top-bar-title">
+            <h1 id="adminPageTitle">Dashboard Overview</h1>
+          </div>
+        </div>
+
+        <div class="top-bar-right">
+          <!-- Real-Time Clock -->
+          <div class="admin-live-time" id="adminLiveClock">
+            <i class="fa-regular fa-clock"></i> --:--:--
+          </div>
+
+          <!-- Supabase Live Connection Status Button -->
+          <button type="button" class="btn-db-status status-not_configured" id="btnDbStatusModal" onclick="window.openDbConfigModal(); return false;" title="Click to view or update Supabase Database credentials">
+            <span class="db-status-dot"></span>
+            <span id="dbStatusLabel">Supabase: Setup Database</span>
+          </button>
+
+          <!-- Gemini AI Connection Status & Config Button -->
+          <button type="button" class="btn-db-status status-connected" id="btnGeminiStatusModal" onclick="window.openGeminiConfigModal(); return false;" title="Click to view or update Google Gemini AI API Key">
+            <span class="db-status-dot" style="background-color: #8B5CF6; box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.25);"></span>
+            <span id="geminiStatusLabel">Gemini AI: Active</span>
+          </button>
+
+          <a href="index.html" class="btn-admin-site-link">
+            <i class="fa-solid fa-globe"></i>
+            <span>View Public Site</span>
+          </a>
+        </div>
+      </header>
+
+      <!-- Dashboard Content Body -->
+      <div class="admin-content-body">
+        <!-- ===================================================================
+             PANE 1: OVERVIEW & ANALYTICS STATS
+             =================================================================== -->
+        <section class="dashboard-pane active" id="paneOverview">
+          <!-- Stat Widgets Grid -->
+          <div class="admin-stats-grid">
+            <!-- Widget 1: Total Reservations -->
+            <div class="stat-widget-card">
+              <div class="stat-metric-info">
+                <h4>Total Reservations</h4>
+                <div class="stat-number" id="adminStatTotal">0</div>
+                <div class="stat-subtext">Cumulative guest requests</div>
+              </div>
+              <div class="stat-icon-wrapper coral">
+                <i class="fa-solid fa-book-bookmark"></i>
+              </div>
+            </div>
+
+            <!-- Widget 2: Pending Review -->
+            <div class="stat-widget-card">
+              <div class="stat-metric-info">
+                <h4>Pending Review</h4>
+                <div class="stat-number" id="adminStatPending" style="color: var(--status-pending);">0</div>
+                <div class="stat-subtext">Needs staff approval</div>
+              </div>
+              <div class="stat-icon-wrapper amber">
+                <i class="fa-solid fa-hourglass-half"></i>
+              </div>
+            </div>
+
+            <!-- Widget 3: Confirmed Bookings -->
+            <div class="stat-widget-card">
+              <div class="stat-metric-info">
+                <h4>Confirmed Tables</h4>
+                <div class="stat-number" id="adminStatConfirmed" style="color: var(--status-confirmed);">0</div>
+                <div class="stat-subtext">Ready for dining</div>
+              </div>
+              <div class="stat-icon-wrapper green">
+                <i class="fa-solid fa-circle-check"></i>
+              </div>
+            </div>
+
+            <!-- Widget 4: Menu Items -->
+            <div class="stat-widget-card">
+              <div class="stat-metric-info">
+                <h4>Active Menu Dishes</h4>
+                <div class="stat-number" id="adminStatMenu">0 / 0</div>
+                <div class="stat-subtext">Available in live menu</div>
+              </div>
+              <div class="stat-icon-wrapper blue">
+                <i class="fa-solid fa-utensils"></i>
+              </div>
+            </div>
+          </div>
+
+          <!-- Quick Reservations Summary on Overview -->
+          <div class="data-table-container">
+            <div class="data-table-header">
+              <div class="table-title-area">
+                <h3>Recent Table Reservation Requests</h3>
+                <p>Approve incoming requests or open full details.</p>
+              </div>
+              <a href="#reservations" class="btn btn-secondary btn-sm" onclick="document.querySelector('[data-pane=\'paneReservations\']').click();">
+                View All Reservations <i class="fa-solid fa-arrow-right"></i>
+              </a>
+            </div>
+
+            <div class="table-responsive">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>Ref ID</th>
+                    <th>Customer Name</th>
+                    <th>Phone</th>
+                    <th>Date & Time</th>
+                    <th>Party & Area</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="adminOverviewTableBody">
+                  <!-- Synced from reservations table -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- ===================================================================
+             PANE 2: RESERVATIONS MANAGEMENT
+             =================================================================== -->
+        <section class="dashboard-pane" id="paneReservations">
+          <div class="data-table-container">
+            <div class="data-table-header">
+              <div class="table-title-area">
+                <h3>Reservation Inquiries & Approvals</h3>
+                <p>Real-time booking management. Approve or decline customer requests.</p>
+              </div>
+
+              <div class="table-actions-area">
+                <!-- Status Filter Tabs -->
+                <div class="filter-tab-pills">
+                  <span class="tab-pill active" data-filter="all">All</span>
+                  <span class="tab-pill" data-filter="pending">Pending</span>
+                  <span class="tab-pill" data-filter="confirmed">Confirmed</span>
+                  <span class="tab-pill" data-filter="rejected">Rejected</span>
+                </div>
+
+                <!-- Table Search -->
+                <div class="table-search-box">
+                  <i class="fa-solid fa-magnifying-glass"></i>
+                  <input type="text" id="resTableSearch" placeholder="Search by name, code, phone...">
+                </div>
+              </div>
+            </div>
+
+            <div class="table-responsive">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>Ref ID</th>
+                    <th>Customer Name</th>
+                    <th>Phone</th>
+                    <th>Date & Time</th>
+                    <th>Party & Area</th>
+                    <th>Status</th>
+                    <th>Quick Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="adminReservationsTableBody">
+                  <!-- Injected dynamically by js/admin.js -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- ===================================================================
+             PANE 3: MENU MANAGEMENT
+             =================================================================== -->
+        <section class="dashboard-pane" id="paneMenu">
+          <div class="data-table-container" style="background: transparent; border: none; box-shadow: none;">
+            <div class="data-table-header" style="background: #FFF; border-radius: var(--radius-lg); margin-bottom: 24px; border: 1px solid var(--border-light);">
+              <div class="table-title-area">
+                <h3>Menu Items & Live Availability</h3>
+                <p>Toggle food availability in real-time, create new dishes, or edit prices.</p>
+              </div>
+
+              <div class="table-actions-area">
+                <div class="table-search-box">
+                  <i class="fa-solid fa-magnifying-glass"></i>
+                  <input type="text" id="menuAdminSearch" placeholder="Filter dishes...">
+                </div>
+
+                <button type="button" class="btn btn-primary btn-sm" id="btnOpenAddFoodModal">
+                  <i class="fa-solid fa-plus"></i> Add New Food Item
+                </button>
+              </div>
+            </div>
+
+            <!-- Dynamic Menu Items Grid -->
+            <div class="menu-manage-grid" id="adminMenuGrid">
+              <!-- Injected dynamically by js/admin.js -->
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <!-- =========================================================================
+       MODAL: RESERVATION DETAILS SHEET
+       ========================================================================= -->
+  <div class="modal-backdrop" id="resDetailModal">
+    <div class="modal-content-box" style="max-width: 560px;">
+      <button class="modal-close-btn" id="resDetailModalClose"><i class="fa-solid fa-xmark"></i></button>
+      <div class="admin-modal-box" id="resDetailModalContent">
+        <!-- Injected dynamically -->
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       MODAL: ADD / EDIT FOOD ITEM
+       ========================================================================= -->
+  <div class="modal-backdrop" id="addFoodItemModal">
+    <div class="modal-content-box" style="max-width: 600px;">
+      <button class="modal-close-btn" id="addFoodModalClose"><i class="fa-solid fa-xmark"></i></button>
+      <div class="admin-modal-box">
+        <h3 id="foodFormTitle">Add New Food Item</h3>
+        <p>This dish will be instantly updated in the customer menu catalog.</p>
+
+        <form id="addFoodItemForm">
+          <input type="hidden" id="editFoodItemId" value="">
+
+          <div class="res-form-grid" style="margin-bottom: 16px;">
+            <div class="form-group form-group-full">
+              <label for="foodItemName" class="form-label">Dish Name <span class="req-indicator">*</span></label>
+              <input type="text" id="foodItemName" class="form-control" placeholder="e.g., Truffle Melt Burger" required>
+            </div>
+
+            <div class="form-group">
+              <label for="foodItemCategory" class="form-label">Category <span class="req-indicator">*</span></label>
+              <select id="foodItemCategory" class="form-control" required>
+                <option value="burgers">Burgers & Melts</option>
+                <option value="pizzas">Stone Pizzas</option>
+                <option value="tacos-bites">Tacos & Bites</option>
+                <option value="bowls-noodles">Bowls & Ramen</option>
+                <option value="desserts-drinks">Desserts & Brews</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="foodItemPrice" class="form-label">Price (Rs. LKR) <span class="req-indicator">*</span></label>
+              <input type="number" step="10" id="foodItemPrice" class="form-control" placeholder="e.g., 2500" required>
+            </div>
+
+            <div class="form-group form-group-full">
+              <label for="foodItemImage" class="form-label">Image URL</label>
+              <input type="url" id="foodItemImage" class="form-control" placeholder="https://images.unsplash.com/...">
+            </div>
+
+            <div class="form-group form-group-full">
+              <label for="foodItemDescription" class="form-label">Description <span class="req-indicator">*</span></label>
+              <textarea id="foodItemDescription" class="form-control" rows="3" placeholder="Briefly describe the ingredients and flavors..." required></textarea>
+            </div>
+
+            <!-- Checkbox Attributes -->
+            <div class="form-group form-group-full">
+              <label class="form-label">Dish Highlights & Availability</label>
+              <div class="food-checkbox-grid">
+                <label class="checkbox-pill-label">
+                  <input type="checkbox" id="foodItemAvailable" checked>
+                  <span><i class="fa-solid fa-check" style="color: #10B981; margin-right: 4px;"></i> Available in Stock</span>
+                </label>
+
+                <label class="checkbox-pill-label">
+                  <input type="checkbox" id="foodItemVeg">
+                  <span><i class="fa-solid fa-leaf" style="color: #16A34A; margin-right: 4px;"></i> Vegetarian</span>
+                </label>
+
+                <label class="checkbox-pill-label">
+                  <input type="checkbox" id="foodItemSpicy">
+                  <span><i class="fa-solid fa-pepper-hot" style="color: #EA580C; margin-right: 4px;"></i> Spicy Dish</span>
+                </label>
+
+                <label class="checkbox-pill-label">
+                  <input type="checkbox" id="foodItemPopular">
+                  <span><i class="fa-solid fa-star" style="color: #F59E0B; margin-right: 4px;"></i> Chef's Special</span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div style="display: flex; justify-content: flex-end; gap: 12px; margin-top: 24px;">
+            <button type="button" class="btn btn-secondary" onclick="document.getElementById('addFoodItemModal').classList.remove('active')">Cancel</button>
+            <button type="submit" class="btn btn-primary">Save Food Item</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       MODAL: SUPABASE DATABASE CONFIGURATION & SQL HELPER
+       ========================================================================= -->
+  <div class="modal-backdrop" id="dbConfigModal" onclick="if(event.target === this) window.closeDbConfigModal();">
+    <div class="modal-content-box" style="max-width: 620px;">
+      <button class="modal-close-btn" id="dbConfigModalClose" onclick="window.closeDbConfigModal()"><i class="fa-solid fa-xmark"></i></button>
+      <div class="admin-modal-box">
+        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 6px;">
+          <div style="width: 40px; height: 40px; border-radius: 10px; background: #3ECF8E; color: #FFF; display: flex; align-items: center; justify-content: center; font-size: 1.3rem;">
+            <i class="fa-solid fa-database"></i>
+          </div>
+          <div>
+            <h3 style="margin: 0;">Supabase Database Connection</h3>
+            <span style="font-size: 0.8rem; color: var(--text-secondary);">Real-time PostgreSQL Backend for MiniKitchen</span>
+          </div>
+        </div>
+
+        <div id="dbModalNotice" style="background: #FFF9F6; border: 1px solid var(--border-light); padding: 16px; border-radius: 12px; margin: 18px 0;">
+          <h4 style="font-size: 0.95rem; margin-bottom: 4px; color: var(--text-main);">Quick Setup Steps:</h4>
+          <ol style="font-size: 0.86rem; color: var(--text-secondary); padding-left: 20px; line-height: 1.6;">
+            <li>Log in or create a free project at <strong><a href="https://supabase.com" target="_blank" style="color: var(--primary-coral); text-decoration: underline;">supabase.com</a></strong>.</li>
+            <li>In Supabase -> <strong>SQL Editor</strong>, paste and run the contents of <code>supabase_schema.sql</code>.</li>
+            <li>In Supabase -> <strong>Project Settings -> API</strong>, copy your <strong>Project URL</strong> and paste it below:</li>
+          </ol>
+        </div>
+
+        <form id="dbConfigForm">
+          <div class="res-form-grid" style="margin-bottom: 20px;">
+            <div class="form-group form-group-full">
+              <label for="inputSupabaseUrl" class="form-label">Supabase Project URL <span class="req-indicator">*</span></label>
+              <input type="url" id="inputSupabaseUrl" class="form-control" placeholder="https://your-project-ref.supabase.co" required>
+            </div>
+
+            <div class="form-group form-group-full">
+              <label for="inputSupabaseKey" class="form-label">Supabase Publishable / Anon Key <span class="req-indicator">*</span></label>
+              <input type="password" id="inputSupabaseKey" class="form-control" value="sb_publishable_glgQZRd998vTKx_oGn4c8Q_nywigPhm" required>
+            </div>
+          </div>
+
+          <div style="display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap;">
+            <button type="button" class="btn btn-secondary btn-sm" id="btnDisconnectDb" style="color: #DC2626;">
+              <i class="fa-solid fa-link-slash"></i> Clear Credentials
+            </button>
+            <div style="display: flex; gap: 10px;">
+              <button type="button" class="btn btn-secondary" onclick="window.closeDbConfigModal()">Close</button>
+              <button type="submit" class="btn btn-primary">
+                <i class="fa-solid fa-cloud-arrow-up"></i> Save & Connect Database
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       MODAL: EDIT STAFF PROFILE & AVATAR
+       ========================================================================= -->
+  <div class="modal-backdrop" id="editStaffProfileModal" onclick="if(event.target === this) window.closeEditProfileModal();">
+    <div class="modal-content-box" style="max-width: 520px;">
+      <button class="modal-close-btn" id="editProfileModalClose" onclick="window.closeEditProfileModal()"><i class="fa-solid fa-xmark"></i></button>
+      <div class="admin-modal-box">
+        <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 22px;">
+          <div class="profile-avatar-monogram" id="editProfilePreviewAvatar" style="width: 58px; height: 58px; font-size: 1.3rem; box-shadow: 0 4px 16px rgba(0,0,0,0.15);">YM</div>
+          <div>
+            <h3 style="margin: 0; font-size: 1.35rem;">Staff Profile Settings</h3>
+            <span style="font-size: 0.84rem; color: var(--text-secondary);">Manage your name, staff role, avatar style, and password</span>
+          </div>
+        </div>
+
+        <form id="editStaffProfileForm">
+          <div class="res-form-grid" style="margin-bottom: 20px;">
+            <div class="form-group form-group-full">
+              <label for="editProfileFullName" class="form-label">Full Display Name <span class="req-indicator">*</span></label>
+              <input type="text" id="editProfileFullName" class="form-control" required placeholder="e.g. Yasas Manager">
+            </div>
+
+            <div class="form-group">
+              <label for="editProfileRole" class="form-label">Staff Role <span class="req-indicator">*</span></label>
+              <select id="editProfileRole" class="form-control" required>
+                <option value="Restaurant Manager">Restaurant Manager</option>
+                <option value="Head Chef">Head Chef</option>
+                <option value="Host / Reception">Host / Reception</option>
+                <option value="Floor Staff">Floor Staff</option>
+                <option value="Owner / Executive">Owner / Executive</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="editProfileEmail" class="form-label">Email Address</label>
+              <input type="email" id="editProfileEmail" class="form-control" placeholder="staff@minikitchen.lk">
+            </div>
+
+            <!-- Avatar Monogram Theme Colors -->
+            <div class="form-group form-group-full">
+              <label class="form-label">Monogram Avatar Color Theme</label>
+              <div class="avatar-color-picker" id="avatarColorPicker">
+                <button type="button" class="color-swatch active" data-color="#EB5757" style="background: linear-gradient(135deg, #EB5757, #C53030);" title="Coral Spice"></button>
+                <button type="button" class="color-swatch" data-color="#2563EB" style="background: linear-gradient(135deg, #2563EB, #1D4ED8);" title="Ocean Blue"></button>
+                <button type="button" class="color-swatch" data-color="#059669" style="background: linear-gradient(135deg, #059669, #047857);" title="Fresh Emerald"></button>
+                <button type="button" class="color-swatch" data-color="#7C3AED" style="background: linear-gradient(135deg, #7C3AED, #6D28D9);" title="Royal Purple"></button>
+                <button type="button" class="color-swatch" data-color="#D97706" style="background: linear-gradient(135deg, #D97706, #B45309);" title="Warm Amber"></button>
+                <button type="button" class="color-swatch" data-color="#374151" style="background: linear-gradient(135deg, #374151, #1F2937);" title="Dark Slate"></button>
+              </div>
+            </div>
+
+            <!-- Optional Change Password -->
+            <div class="form-group form-group-full" style="border-top: 1px dashed var(--border-light); padding-top: 16px; margin-top: 4px;">
+              <label for="editProfileNewPassword" class="form-label">Update Password <span style="font-weight: 500; color: var(--text-muted); font-size: 0.8rem;">(Leave blank to keep current)</span></label>
+              <div class="input-with-icon auth-password-wrapper">
+                <i class="fa-solid fa-lock"></i>
+                <input type="password" id="editProfileNewPassword" class="form-control" placeholder="Enter new password (optional)" autocomplete="new-password">
+                <button type="button" class="btn-toggle-pwd" onclick="window.togglePasswordVisibility('editProfileNewPassword', this)" title="Show/Hide Password" aria-label="Toggle password visibility">
+                  <i class="fa-regular fa-eye"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div style="display: flex; justify-content: flex-end; gap: 12px; margin-top: 22px;">
+            <button type="button" class="btn btn-secondary" onclick="window.closeEditProfileModal()">Cancel</button>
+            <button type="submit" class="btn btn-primary" id="btnSaveProfile">
+              <i class="fa-solid fa-check"></i>
+              <span>Save Changes</span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       MODAL: GEMINI AI CONFIGURATION & KEY SETTINGS
+       ========================================================================= -->
+  <div class="modal-backdrop" id="geminiConfigModal" onclick="if(event.target === this) window.closeGeminiConfigModal();">
+    <div class="modal-content-box" style="max-width: 560px;">
+      <button class="modal-close-btn" id="geminiConfigModalClose" onclick="window.closeGeminiConfigModal()"><i class="fa-solid fa-xmark"></i></button>
+      <div class="admin-modal-box">
+        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 6px;">
+          <div style="width: 42px; height: 42px; border-radius: 10px; background: linear-gradient(135deg, #8B5CF6, #6366F1); color: #FFF; display: flex; align-items: center; justify-content: center; font-size: 1.3rem;">
+            <i class="fa-solid fa-wand-magic-sparkles"></i>
+          </div>
+          <div>
+            <h3 style="margin: 0; font-size: 1.35rem;">Google Gemini AI Assistant</h3>
+            <span style="font-size: 0.8rem; color: var(--text-secondary);">Powering the "MiniChef" conversational culinary concierge</span>
+          </div>
+        </div>
+
+        <div style="background: #F5F3FF; border: 1px solid #DDD6FE; padding: 14px 16px; border-radius: 12px; margin: 18px 0; font-size: 0.86rem; color: #5B21B6; line-height: 1.5;">
+          <strong>Active Engine:</strong> Google Gemini 1.5 Flash (with zero-downtime local knowledge fallback). MiniChef uses this key to recommend food, calculate prices in Rs., answer dietary questions, and assist table bookings.
+        </div>
+
+        <form id="geminiConfigForm">
+          <div class="res-form-grid" style="margin-bottom: 18px;">
+            <div class="form-group form-group-full">
+              <label for="inputGeminiKey" class="form-label">Gemini API Key <span class="req-indicator">*</span></label>
+              <div class="input-with-icon auth-password-wrapper">
+                <i class="fa-solid fa-key"></i>
+                <input type="password" id="inputGeminiKey" class="form-control" required placeholder="AQ.Ab... or AIzaSy...">
+                <button type="button" class="btn-toggle-pwd" onclick="window.togglePasswordVisibility('inputGeminiKey', this)" title="Show/Hide API Key">
+                  <i class="fa-regular fa-eye"></i>
+                </button>
+              </div>
+              <span style="font-size: 0.74rem; color: var(--text-muted); margin-top: 3px; display: block;" id="geminiKeyStatusNote">
+                Stored securely in your local browser storage.
+              </span>
+            </div>
+          </div>
+
+          <div id="geminiTestAlert" style="display: none; padding: 10px 14px; border-radius: 8px; margin-bottom: 16px; font-size: 0.85rem;"></div>
+
+          <div style="display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap;">
+            <button type="button" class="btn btn-secondary btn-sm" id="btnTestGeminiConn">
+              <i class="fa-solid fa-bolt"></i> Test Connection
+            </button>
+            <div style="display: flex; gap: 10px;">
+              <button type="button" class="btn btn-secondary" onclick="window.closeGeminiConfigModal()">Close</button>
+              <button type="submit" class="btn btn-primary">
+                <i class="fa-solid fa-floppy-disk"></i> Save Key
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <!-- Supabase CDN Client -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-config.js"></script>
+  <script src="js/gemini-config.js"></script>
+  <script src="js/state.js"></script>
+  <script src="js/admin.js?v=2026.5"></script>
+  <script>
+    // Global modal openers for immediate response
+    window.openDbConfigModal = function() {
+      const modal = document.getElementById('dbConfigModal');
+      const inputUrl = document.getElementById('inputSupabaseUrl');
+      const inputKey = document.getElementById('inputSupabaseKey');
+      if (inputUrl) inputUrl.value = window.SUPABASE_CONFIG?.url || localStorage.getItem('minikitchen_supabase_url') || '';
+      if (inputKey) inputKey.value = window.SUPABASE_CONFIG?.anonKey || localStorage.getItem('minikitchen_supabase_key') || 'sb_publishable_glgQZRd998vTKx_oGn4c8Q_nywigPhm';
+      if (modal) modal.classList.add('active');
+    };
+
+    window.closeDbConfigModal = function() {
+      const modal = document.getElementById('dbConfigModal');
+      if (modal) modal.classList.remove('active');
+    };
+
+    window.openGeminiConfigModal = function() {
+      const modal = document.getElementById('geminiConfigModal');
+      const input = document.getElementById('inputGeminiKey');
+      const note = document.getElementById('geminiKeyStatusNote');
+      if (input && window.GEMINI_CONFIG) {
+        input.value = window.GEMINI_CONFIG.getKey();
+      }
+      if (note && window.GEMINI_CONFIG) {
+        note.textContent = `Masked Key: ${window.GEMINI_CONFIG.getMaskedKey()} • Model: ${window.GEMINI_CONFIG.primaryModel}`;
+      }
+      const alertBox = document.getElementById('geminiTestAlert');
+      if (alertBox) alertBox.style.display = 'none';
+      if (modal) modal.classList.add('active');
+    };
+
+    window.closeGeminiConfigModal = function() {
+      const modal = document.getElementById('geminiConfigModal');
+      if (modal) modal.classList.remove('active');
+    };
+
+    // Attach Gemini form events
+    document.addEventListener('DOMContentLoaded', () => {
+      const geminiForm = document.getElementById('geminiConfigForm');
+      if (geminiForm) {
+        geminiForm.addEventListener('submit', (e) => {
+          e.preventDefault();
+          const keyInput = document.getElementById('inputGeminiKey');
+          if (keyInput && window.GEMINI_CONFIG) {
+            window.GEMINI_CONFIG.saveKey(keyInput.value);
+            window.showToast?.('Gemini API Key updated successfully!', 'success');
+            window.closeGeminiConfigModal();
+          }
+        });
+      }
+
+      const btnTest = document.getElementById('btnTestGeminiConn');
+      if (btnTest) {
+        btnTest.addEventListener('click', async () => {
+          btnTest.disabled = true;
+          btnTest.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Testing...';
+          const alertBox = document.getElementById('geminiTestAlert');
+          const res = await window.GEMINI_CONFIG?.testConnection();
+          btnTest.disabled = false;
+          btnTest.innerHTML = '<i class="fa-solid fa-bolt"></i> Test Connection';
+          if (alertBox) {
+            alertBox.style.display = 'block';
+            if (res && res.success) {
+              alertBox.style.background = '#DCFCE7';
+              alertBox.style.color = '#15803D';
+              alertBox.style.border = '1px solid #86EFAC';
+              alertBox.innerHTML = `<strong>Connected!</strong> Gemini responded: "${res.reply}"`;
+            } else {
+              alertBox.style.background = '#FEE2E2';
+              alertBox.style.color = '#B91C1C';
+              alertBox.style.border = '1px solid #FECACA';
+              alertBox.innerHTML = `<strong>Connection issue:</strong> ${res?.message || 'Check key and internet'}`;
+            }
+          }
+        });
+      }
+    });
+
+    // Overview table synchronizer
+    document.addEventListener('DOMContentLoaded', () => {
+      const overviewTbody = document.getElementById('adminOverviewTableBody');
+      const resTbody = document.getElementById('adminReservationsTableBody');
+      function syncOverview() {
+        if (overviewTbody && resTbody) {
+          const rows = resTbody.querySelectorAll('tr');
+          overviewTbody.innerHTML = '';
+          Array.from(rows).slice(0, 5).forEach(row => {
+            overviewTbody.appendChild(row.cloneNode(true));
+          });
+        }
+      }
+      setTimeout(syncOverview, 200);
+      window.addEventListener('minikitchen:reservations-updated', () => {
+        setTimeout(syncOverview, 100);
+      });
+    });
+  </script>
+</body>
+</html>
+

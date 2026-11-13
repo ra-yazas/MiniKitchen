@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <defs>
+    <linearGradient id="mkGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#EB5757"/>
+      <stop offset="100%" stop-color="#E24747"/>
+    </linearGradient>
+  </defs>
+  <!-- Background Badge matching MiniKitchen .logo-icon -->
+  <rect width="64" height="64" rx="16" fill="url(#mkGrad)"/>
+  <!-- Utensils Icon matching fa-solid fa-utensils -->
+  <g transform="translate(15.8, 15) scale(0.06640625)">
+    <path fill="#FFFFFF" d="M184 0c13.3 0 24 10.7 24 24v104c0 35.3-28.7 64-64 64H128v296c0 13.3-10.7 24-24 24s-24-10.7-24-24V192H64C28.7 192 0 163.3 0 128V24C0 10.7 10.7 0 24 0S48 10.7 48 24v80h16V24c0-13.3 10.7-24 24-24s24 10.7 24 24v80h16V24c0-13.3 10.7-24 24-24s24 10.7 24 24v80h16V24c0-13.3 10.7-24 24-24zm200 0c57.4 0 104 46.6 104 104 0 46.6-30.8 86-72.9 98.7V488c0 13.3-10.7 24-24 24s-24-10.7-24-24V202.7C325.2 190 294.4 150.6 294.4 104 294.4 46.6 341 0 384 0z"/>
+  </g>
+</svg>
+

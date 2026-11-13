@@ -1,0 +1,1056 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MiniKitchen | Artisanal Comfort Food & Table Reservations</title>
+  <meta name="description" content="MiniKitchen - Premium artisanal restaurant serving farm-to-table comfort food, gourmet burgers, stone-baked pizzas, and craft ramen. Book your table online.">
+
+  <!-- Favicon / Brand Logo (Browser Tab) -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23EB5757'/%3E%3Cstop offset='100%25' stop-color='%23E24747'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='16' fill='url(%23g)'/%3E%3Cg transform='translate(15.8,15) scale(0.0664)'%3E%3Cpath fill='%23FFFFFF' d='M184 0c13.3 0 24 10.7 24 24v104c0 35.3-28.7 64-64 64H128v296c0 13.3-10.7 24-24 24s-24-10.7-24-24V192H64C28.7 192 0 163.3 0 128V24C0 10.7 10.7 0 24 0S48 10.7 48 24v80h16V24c0-13.3 10.7-24 24-24s24 10.7 24 24v80h16V24c0-13.3 10.7-24 24-24s24 10.7 24 24v80h16V24c0-13.3 10.7-24 24-24zM384 0c57.4 0 104 46.6 104 104 0 46.6-30.8 86-72.9 98.7V488c0 13.3-10.7 24-24 24s-24-10.7-24-24V202.7C325.2 190 294.4 150.6 294.4 104 294.4 46.6 341 0 384 0z'/%3E%3C/g%3E%3C/svg%3E">
+  <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
+  <link rel="alternate icon" type="image/png" sizes="32x32" href="assets/images/favicon-32x32.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/images/apple-touch-icon.png">
+  <meta name="theme-color" content="#EB5757">
+
+  <!-- Google Fonts: Plus Jakarta Sans (matching reference typography) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,700&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome Icons (Free CDN) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <!-- MiniKitchen Stylesheets -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/reservations.css">
+  <link rel="stylesheet" href="css/chatbot.css?v=2026.5">
+  <link rel="stylesheet" href="css/responsive.css?v=2026.5">
+</head>
+<body>
+
+  <!-- =========================================================================
+       1. NAVIGATION BAR
+       ========================================================================= -->
+  <header class="site-header">
+    <div class="container header-container">
+      <!-- Brand Logo -->
+      <a href="index.html" class="brand-logo" aria-label="MiniKitchen Home">
+        <div class="logo-icon">
+          <i class="fa-solid fa-utensils"></i>
+        </div>
+        <span>Mini<span class="logo-accent">Kitchen</span></span>
+      </a>
+
+      <!-- Primary Desktop & Tablet Nav -->
+      <nav aria-label="Main Navigation">
+        <ul class="nav-menu" id="primaryNavMenu">
+          <li><a href="#home" class="nav-link active">Home</a></li>
+          <li><a href="#categories" class="nav-link">Categories</a></li>
+          <li><a href="#menu" class="nav-link">Food Menu</a></li>
+          <li><a href="#about" class="nav-link">About Us</a></li>
+          <li><a href="#hours" class="nav-link">Hours</a></li>
+          <li><a href="#reservations" class="nav-link">Reservations</a></li>
+          <li><a href="#contact" class="nav-link">Contact</a></li>
+        </ul>
+      </nav>
+
+      <!-- Action Buttons -->
+      <div class="header-actions">
+        <!-- Primary Reservation CTA -->
+        <a href="#reservations" class="btn btn-primary btn-sm">
+          <i class="fa-regular fa-calendar-check"></i>
+          <span>Book Table</span>
+        </a>
+
+        <!-- Mobile Drawer Hamburger Toggle -->
+        <button class="mobile-toggle" id="mobileNavToggle" aria-label="Toggle navigation menu">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer Backdrop Overlay -->
+  <div class="nav-backdrop" id="navBackdrop"></div>
+
+  <!-- =========================================================================
+       2. HERO SECTION (Inspired by Reference Image Design & Color Palette)
+       ========================================================================= -->
+  <section class="hero-section" id="home">
+    <div class="container">
+      <div class="hero-grid">
+        <!-- Left Content -->
+        <div class="hero-content reveal-on-scroll">
+          <div class="hero-tag">
+            <span class="tag-dot"></span>
+            <span>Sri Lanka's Favourite Artisan Kitchen</span>
+          </div>
+
+          <h1 class="hero-title">
+            All Artisanal Food is <br>
+            Available at <span class="highlight-coral">MiniKitchen</span>
+          </h1>
+
+          <p class="hero-description">
+            We are just a click away when you crave memorable gastronomic perfection. Handcrafted comfort food, slow-fermented crusts, and farm-fresh ingredients in a vibrant cozy ambiance.
+          </p>
+
+          <!-- Social Proof Avatar Badge (like reference) -->
+          <div class="hero-social-proof">
+            <div class="avatar-stack">
+              <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=120&q=80" alt="Customer avatar">
+              <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=120&q=80" alt="Customer avatar">
+              <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=120&q=80" alt="Customer avatar">
+            </div>
+            <div class="proof-text">
+              <div class="proof-stars">
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+              </div>
+              <span>Loved by <strong>4,800+ food lovers</strong> in Colombo</span>
+            </div>
+          </div>
+
+          <!-- Hero Action Buttons -->
+          <div class="hero-actions">
+            <a href="#reservations" class="btn btn-primary btn-lg">
+              <i class="fa-solid fa-calendar-plus"></i>
+              <span>Reserve a Table</span>
+            </a>
+
+            <a href="#menu" class="btn btn-secondary btn-lg">
+              <i class="fa-solid fa-book-open"></i>
+              <span>Explore Menu</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Right Visual Showcase (Matching Egg/Sandwich centerpiece in reference) -->
+        <div class="hero-visual reveal-on-scroll delay-1">
+          <div class="hero-visual-bg-circle"></div>
+
+          <!-- Decorative dashed trajectory doodle -->
+          <svg class="trajectory-doodle" viewBox="0 0 140 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M10 80 C 40 10, 100 10, 130 60" stroke="#EB5757" stroke-width="2.5" stroke-dasharray="6 6" stroke-linecap="round"/>
+            <polygon points="130,55 135,65 124,63" fill="#EB5757"/>
+          </svg>
+
+          <!-- Main Centerpiece Food Display -->
+          <div class="hero-food-wrapper">
+            <img 
+              src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=800&q=80" 
+              alt="Artisan Golden Sunrise Burger with Sunny-side Egg" 
+              class="hero-main-dish"
+            >
+          </div>
+
+          <!-- Top-Right Floating Badge -->
+          <div class="floating-badge badge-top-right">
+            <div class="badge-icon-box gold">
+              <i class="fa-solid fa-fire"></i>
+            </div>
+            <div class="badge-content">
+              <h4>Chef’s Gold Pick</h4>
+              <p>Wagyu & Sunny Egg</p>
+            </div>
+          </div>
+
+          <!-- Bottom-Left Floating Badge -->
+          <div class="floating-badge badge-bottom-left">
+            <div class="badge-icon-box coral">
+              <i class="fa-solid fa-star"></i>
+            </div>
+            <div class="badge-content">
+              <h4>4.9 / 5 Rating</h4>
+              <p>1,200+ Verified Diners</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Hero Floating 3-Column Feature Strip (Directly from reference image) -->
+      <div class="hero-features-bar reveal-on-scroll delay-2">
+        <div class="features-pill-card">
+          <!-- Col 1 -->
+          <div class="feature-col">
+            <div class="feature-circle-icon">
+              <i class="fa-solid fa-truck-fast"></i>
+            </div>
+            <div class="feature-info">
+              <h3>Fast Delivery</h3>
+              <p>Hot, gourmet dishes delivered safely to your doorstep within 30-45 minutes.</p>
+            </div>
+          </div>
+
+          <!-- Col 2 -->
+          <div class="feature-col">
+            <div class="feature-circle-icon">
+              <i class="fa-solid fa-rotate-right"></i>
+            </div>
+            <div class="feature-info">
+              <h3>Fresh Food</h3>
+              <p>100% farm-to-table organic produce sourced every sunrise from local growers.</p>
+            </div>
+          </div>
+
+          <!-- Col 3 -->
+          <div class="feature-col">
+            <div class="feature-circle-icon">
+              <i class="fa-solid fa-receipt"></i>
+            </div>
+            <div class="feature-info">
+              <h3>Free Cancellation</h3>
+              <p>Zero-fee reservation updates and table rescheduling whenever plans change.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       3. BEST DELIVERED CATEGORIES (Inspired by reference image layout)
+       ========================================================================= -->
+  <section class="section section-warm" id="categories">
+    <div class="container">
+      <div class="categories-header-row">
+        <div>
+          <span class="section-badge section-badge-gold">Popular Selections</span>
+          <h2 class="section-title">Best Delivered <span class="text-coral">Categories</span></h2>
+          <p class="section-subtitle">Here are some of our most celebrated culinary crafts. Click any category to view full items.</p>
+        </div>
+        <a href="#menu" class="btn btn-primary btn-sm">See Full Menu <i class="fa-solid fa-arrow-right"></i></a>
+      </div>
+
+      <div class="categories-grid">
+        <!-- Card 1 -->
+        <div class="category-card reveal-on-scroll" data-cat="burgers">
+          <span class="category-badge-pill">Hot 20% Off</span>
+          <div class="category-img-container">
+            <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=300&q=80" alt="Artisan Burgers">
+          </div>
+          <h3>Artisan Burgers</h3>
+          <p>Prime beef & brioche buns</p>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="category-card reveal-on-scroll delay-1" data-cat="pizzas">
+          <span class="category-badge-pill">Chef's Choice</span>
+          <div class="category-img-container">
+            <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=300&q=80" alt="Stone Oven Pizza">
+          </div>
+          <h3>Stone Oven Pizza</h3>
+          <p>Slow-fermented artisan crust</p>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="category-card reveal-on-scroll delay-2" data-cat="bowls-noodles">
+          <span class="category-badge-pill">Top Comfort</span>
+          <div class="category-img-container">
+            <img src="https://images.unsplash.com/photo-1569718212165-3a8278d5f624?auto=format&fit=crop&w=300&q=80" alt="Ramen & Bowls">
+          </div>
+          <h3>Ramen & Bowls</h3>
+          <p>18-hour simmered broths</p>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="category-card reveal-on-scroll delay-3" data-cat="desserts-drinks">
+          <span class="category-badge-pill">Sweet Deals</span>
+          <div class="category-img-container">
+            <img src="https://images.unsplash.com/photo-1562376552-0d160a2f238d?auto=format&fit=crop&w=300&q=80" alt="Waffles & Desserts">
+          </div>
+          <h3>Waffles & Sweets</h3>
+          <p>Pearl-sugar & wild berries</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       4. FOOD MENU SECTION (Exact reference design: round image with red ring, stars, price, buy button)
+       ========================================================================= -->
+  <section class="section" id="menu">
+    <div class="container">
+      <div class="section-header reveal-on-scroll">
+        <span class="section-badge">Gastronomic Lineup</span>
+        <h2 class="section-title">Our Regular <span class="text-coral">Menu</span></h2>
+        <p class="section-subtitle">
+          These are our signature creations. Every dish is cooked fresh to order with precision temperatures and premium artisanal ingredients.
+        </p>
+      </div>
+
+      <!-- Menu Controls (Category tabs, search, dietary filters) -->
+      <div class="menu-controls reveal-on-scroll">
+        <!-- Search and Dietary Row -->
+        <div class="menu-search-filter-row">
+          <div class="search-input-box">
+            <i class="fa-solid fa-magnifying-glass search-icon"></i>
+            <input type="text" id="menuSearchInput" placeholder="Search dishes, ingredients, pizzas..." aria-label="Search menu">
+            <button id="clearSearchBtn" class="clear-search-btn" title="Clear search"><i class="fa-solid fa-xmark"></i></button>
+          </div>
+
+          <div class="dietary-filters">
+            <button class="diet-pill" id="filterVegOnly">
+              <i class="fa-solid fa-leaf"></i> Vegetarian Only
+            </button>
+            <button class="diet-pill" id="filterPopularOnly">
+              <i class="fa-solid fa-fire"></i> Chef’s Specials
+            </button>
+          </div>
+        </div>
+
+        <!-- Category Tabs -->
+        <div class="category-tabs" role="tablist">
+          <button class="cat-tab-btn active" data-category="all" role="tab">All Dishes</button>
+          <button class="cat-tab-btn" data-category="burgers" role="tab">Burgers & Melts</button>
+          <button class="cat-tab-btn" data-category="pizzas" role="tab">Stone Pizzas</button>
+          <button class="cat-tab-btn" data-category="tacos-bites" role="tab">Tacos & Bites</button>
+          <button class="cat-tab-btn" data-category="bowls-noodles" role="tab">Bowls & Ramen</button>
+          <button class="cat-tab-btn" data-category="desserts-drinks" role="tab">Desserts & Brews</button>
+        </div>
+      </div>
+
+      <!-- Menu Dynamic Grid Container -->
+      <div class="menu-grid" id="foodMenuGrid">
+        <!-- Injected dynamically by js/app.js -->
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       5. ABOUT THE RESTAURANT SECTION
+       ========================================================================= -->
+  <section class="section section-warm" id="about">
+    <div class="container">
+      <div class="about-grid">
+        <!-- Left Visuals -->
+        <div class="about-visuals reveal-on-scroll">
+          <div class="about-main-img-box">
+            <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=900&q=80" alt="MiniKitchen modern interior and open kitchen">
+          </div>
+          <div class="about-experience-card">
+            <div class="exp-num">12+</div>
+            <div class="exp-label">Years of Culinary<br>Craft & Passion</div>
+          </div>
+        </div>
+
+        <!-- Right Story Content -->
+        <div class="about-content reveal-on-scroll delay-1">
+          <span class="section-badge">Behind the Kitchen</span>
+          <h2>Crafted with Heart, Served with Warmth</h2>
+          <p>
+            MiniKitchen was born from an unshakeable belief that exceptional food doesn’t need rigid formalities. We celebrate the intersection of soulful neighborhood comfort with rigorous Michelin-trained culinary technique.
+          </p>
+          <p>
+            Every single morning, our kitchen team kneads 48-hour sourdough, simmers rich tonkotsu broth for 18 hours, and sources herbs from nearby rooftop gardens.
+          </p>
+
+          <div class="about-features-list">
+            <div class="about-feature-item">
+              <i class="fa-solid fa-seedling"></i>
+              <span>100% Organic Local Produce</span>
+            </div>
+            <div class="about-feature-item">
+              <i class="fa-solid fa-award"></i>
+              <span>Culinary Excellence Award 2025</span>
+            </div>
+            <div class="about-feature-item">
+              <i class="fa-solid fa-kitchen-set"></i>
+              <span>Live Open Flame Kitchen</span>
+            </div>
+            <div class="about-feature-item">
+              <i class="fa-solid fa-wine-glass"></i>
+              <span>Curated Natural Wines</span>
+            </div>
+          </div>
+
+          <a href="#reservations" class="btn btn-primary">
+            <span>Dine with Us Tonight</span>
+            <i class="fa-solid fa-arrow-right"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       6. TABLE RESERVATION SYSTEM (Frontend with validation & clear disclaimer)
+       ========================================================================= -->
+  <section class="section" id="reservations">
+    <div class="container">
+      <div class="section-header reveal-on-scroll">
+        <span class="section-badge">Reserve Your Experience</span>
+        <h2 class="section-title">Book a <span class="text-coral">Table</span></h2>
+        <p class="section-subtitle">
+          Reserve your spot in advance to ensure an unforgettable dining journey. Intimate corners, terrace views, or lively counter seating.
+        </p>
+      </div>
+
+      <div class="reservation-container-card reveal-on-scroll">
+        <!-- Left Showcase Side -->
+        <div class="reservation-showcase">
+          <div class="showcase-header">
+            <span class="showcase-badge"><i class="fa-solid fa-champagne-glasses"></i> Host Concierge</span>
+            <h3>Intimate Dining & Celebration Spaces</h3>
+            <p>Whether it’s a romantic date night, a vibrant family gathering, or a celebratory milestone, we ensure your table is prepared with care.</p>
+          </div>
+
+          <div class="showcase-highlights">
+            <div class="showcase-perk">
+              <div class="perk-icon"><i class="fa-solid fa-bell-concierge"></i></div>
+              <div class="perk-text">
+                <h4>Dedicated Table Host</h4>
+                <p>Personalized attention for dietary restrictions and celebrations.</p>
+              </div>
+            </div>
+
+            <div class="showcase-perk">
+              <div class="perk-icon"><i class="fa-solid fa-clock-rotate-left"></i></div>
+              <div class="perk-text">
+                <h4>15-Minute Grace Period</h4>
+                <p>We hold your table for up to 15 minutes past reservation time.</p>
+              </div>
+            </div>
+
+            <div class="showcase-perk">
+              <div class="perk-icon"><i class="fa-solid fa-shield-heart"></i></div>
+              <div class="perk-text">
+                <h4>Safe & Easy Changes</h4>
+                <p>Modify or cancel your booking request anytime with zero charge.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="showcase-footer">
+            <div class="showcase-hotline">
+              <div class="hotline-icon"><i class="fa-solid fa-phone"></i></div>
+              <div class="hotline-info">
+                <span>Immediate Booking Inquiries</span>
+                <strong>+94 11 234 5678</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Reservation Form Side -->
+        <div class="reservation-form-panel">
+          <div class="form-panel-header">
+            <h3>Table Request Details</h3>
+            <button type="button" class="btn-lookup-trigger" id="statusLookupTrigger">
+              <i class="fa-solid fa-magnifying-glass"></i> Check Booking Status
+            </button>
+          </div>
+
+          <!-- MANDATED CLEAR NOTICE: Reservations are requests and not confirmed until approved -->
+          <div class="reservation-notice-alert">
+            <i class="fa-solid fa-triangle-exclamation notice-icon"></i>
+            <div class="notice-text">
+              <strong>Important Notice:</strong> Reservations are treated as booking requests and are <strong>not confirmed</strong> until formally reviewed and approved by our restaurant host team. You will receive an instant SMS/email confirmation once accepted.
+            </div>
+          </div>
+
+          <!-- Form Element -->
+          <form id="tableReservationForm" novalidate>
+            <div class="res-form-grid">
+              <!-- Full Name -->
+              <div class="form-group">
+                <label for="resFullName" class="form-label">Full Name <span class="req-indicator">*</span></label>
+                <div class="input-with-icon">
+                  <i class="fa-regular fa-user"></i>
+                  <input type="text" id="resFullName" class="form-control" placeholder="Kasun Perera" required>
+                </div>
+                <div class="invalid-feedback">Please enter your full name.</div>
+              </div>
+
+              <!-- Phone Number -->
+              <div class="form-group">
+                <label for="resPhone" class="form-label">Phone Number <span class="req-indicator">*</span></label>
+                <div class="input-with-icon">
+                  <i class="fa-solid fa-phone"></i>
+                  <input type="tel" id="resPhone" class="form-control" placeholder="+94 77 123 4567" required>
+                </div>
+                <div class="invalid-feedback">Please provide a valid phone number.</div>
+              </div>
+
+              <!-- Email Address -->
+              <div class="form-group">
+                <label for="resEmail" class="form-label">Email Address <span class="req-indicator">*</span></label>
+                <div class="input-with-icon">
+                  <i class="fa-regular fa-envelope"></i>
+                  <input type="email" id="resEmail" class="form-control" placeholder="kasun.perera@example.lk" required>
+                </div>
+                <div class="invalid-feedback">Please enter a valid email address.</div>
+              </div>
+
+              <!-- Guests Counter -->
+              <div class="form-group">
+                <label class="form-label">Number of Guests <span class="req-indicator">*</span></label>
+                <div class="guest-stepper-box">
+                  <button type="button" class="btn-step" id="guestMinus" aria-label="Decrease guests"><i class="fa-solid fa-minus"></i></button>
+                  <div class="guest-count-display" id="guestCountText">
+                    <i class="fa-solid fa-user-group"></i> 2 Guests
+                  </div>
+                  <button type="button" class="btn-step" id="guestPlus" aria-label="Increase guests"><i class="fa-solid fa-plus"></i></button>
+                  <input type="hidden" id="resGuestCount" value="2">
+                </div>
+              </div>
+
+              <!-- Reservation Date -->
+              <div class="form-group date-picker-form-group">
+                <label for="resDate" class="form-label">Reservation Date <span class="req-indicator">*</span></label>
+                <div class="input-with-icon custom-date-picker-wrap" id="datePickerWrap">
+                  <i class="fa-regular fa-calendar"></i>
+                  <input type="date" id="resDate" class="form-control" required autocomplete="off">
+                  <div class="custom-calendar-dropdown" id="customCalendarDropdown">
+                    <!-- Populated and rendered dynamically by js/reservations.js in MiniKitchen theme -->
+                  </div>
+                </div>
+                <div class="invalid-feedback">Please pick a valid future date.</div>
+              </div>
+
+              <!-- Occasion -->
+              <div class="form-group">
+                <label for="resOccasion" class="form-label">Occasion</label>
+                <select id="resOccasion" class="form-control">
+                  <option value="Standard Dining">Casual Dining</option>
+                  <option value="Birthday">Birthday Celebration</option>
+                  <option value="Anniversary">Romantic Anniversary</option>
+                  <option value="Business Lunch">Business Meeting</option>
+                  <option value="Family Gathering">Family Gathering</option>
+                </select>
+              </div>
+
+              <!-- Reservation Time Slots (Lunch & Dinner chips) -->
+              <div class="form-group form-group-full">
+                <label class="form-label">Select Dining Time Slot <span class="req-indicator">*</span></label>
+                <div class="time-slots-container">
+                  <span class="slot-group-label">Lunch Windows</span>
+                  <div class="time-chips-row">
+                    <input type="radio" name="resTimeSlot" id="slot-1130" value="11:30" class="time-chip-radio">
+                    <label for="slot-1130" class="time-chip-label">11:30 AM</label>
+
+                    <input type="radio" name="resTimeSlot" id="slot-1215" value="12:15" class="time-chip-radio">
+                    <label for="slot-1215" class="time-chip-label">12:15 PM</label>
+
+                    <input type="radio" name="resTimeSlot" id="slot-1300" value="13:00" class="time-chip-radio">
+                    <label for="slot-1300" class="time-chip-label">1:00 PM</label>
+
+                    <input type="radio" name="resTimeSlot" id="slot-1345" value="13:45" class="time-chip-radio">
+                    <label for="slot-1345" class="time-chip-label">1:45 PM</label>
+                  </div>
+
+                  <span class="slot-group-label" style="margin-top: 6px;">Dinner Windows</span>
+                  <div class="time-chips-row">
+                    <input type="radio" name="resTimeSlot" id="slot-1730" value="17:30" class="time-chip-radio">
+                    <label for="slot-1730" class="time-chip-label">5:30 PM</label>
+
+                    <input type="radio" name="resTimeSlot" id="slot-1830" value="18:30" class="time-chip-radio">
+                    <label for="slot-1830" class="time-chip-label">6:30 PM</label>
+
+                    <input type="radio" name="resTimeSlot" id="slot-1930" value="19:30" class="time-chip-radio" checked>
+                    <label for="slot-1930" class="time-chip-label">7:30 PM</label>
+
+                    <input type="radio" name="resTimeSlot" id="slot-2030" value="20:30" class="time-chip-radio">
+                    <label for="slot-2030" class="time-chip-label">8:30 PM</label>
+
+                    <input type="radio" name="resTimeSlot" id="slot-2115" value="21:15" class="time-chip-radio">
+                    <label for="slot-2115" class="time-chip-label">9:15 PM</label>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Seating Preference -->
+              <div class="form-group form-group-full">
+                <label class="form-label">Seating Preference</label>
+                <div class="seating-areas-grid">
+                  <input type="radio" name="resSeating" id="seat-indoor" value="Indoor Main Dining" class="seating-radio" checked>
+                  <label for="seat-indoor" class="seating-card-label">
+                    <i class="fa-solid fa-couch"></i>
+                    <span>Cozy Indoor</span>
+                  </label>
+
+                  <input type="radio" name="resSeating" id="seat-terrace" value="Garden Terrace" class="seating-radio">
+                  <label for="seat-terrace" class="seating-card-label">
+                    <i class="fa-solid fa-tree"></i>
+                    <span>Garden Terrace</span>
+                  </label>
+
+                  <input type="radio" name="resSeating" id="seat-counter" value="Chef's Bar Counter" class="seating-radio">
+                  <label for="seat-counter" class="seating-card-label">
+                    <i class="fa-solid fa-kitchen-set"></i>
+                    <span>Chef's Counter</span>
+                  </label>
+
+                  <input type="radio" name="resSeating" id="seat-private" value="Private Dining Salon" class="seating-radio">
+                  <label for="seat-private" class="seating-card-label">
+                    <i class="fa-solid fa-door-closed"></i>
+                    <span>Private Salon</span>
+                  </label>
+                </div>
+              </div>
+
+              <!-- Special Requests Notes -->
+              <div class="form-group form-group-full">
+                <label for="resNotes" class="form-label">Special Requests & Dietary Requirements</label>
+                <textarea id="resNotes" class="form-control" rows="2" placeholder="e.g., Peanut allergy, quiet corner booth, high chair for toddler..."></textarea>
+              </div>
+            </div>
+
+            <!-- Submit Button with Spinner -->
+            <div class="reservation-submit-row">
+              <button type="submit" class="btn btn-primary btn-reserve-submit" id="btnSubmitReservation">
+                <span class="btn-text">Submit Table Reservation Request</span>
+                <i class="fa-solid fa-circle-notch spinner-icon"></i>
+              </button>
+            </div>
+          </form>
+
+          <!-- Success Screen (Replaces form dynamically upon submission) -->
+          <div class="reservation-success-card" id="reservationSuccessCard">
+            <div class="success-check-bubble">
+              <i class="fa-solid fa-check"></i>
+            </div>
+            <h3>Request Received!</h3>
+            <p>
+              Thank you for choosing MiniKitchen. Your table request has been registered in our reservation queue.
+            </p>
+
+            <div class="booking-ref-box">
+              <span class="ref-label">Your Booking Reference</span>
+              <span class="ref-code" id="successRefCode">MK-8492</span>
+            </div>
+
+            <div class="booking-summary-pill-list" id="successSummaryList">
+              <!-- Injected by js -->
+            </div>
+
+            <p style="font-size: 0.85rem; color: #78350F; background: #FEF3C7; padding: 12px; border-radius: 8px; margin-bottom: 24px;">
+              <i class="fa-solid fa-clock" style="color: #D97706; margin-right: 6px;"></i> Please note: Our host reviews bookings within 15 minutes. We will text and email you once confirmed.
+            </p>
+
+            <div class="success-actions">
+              <button type="button" class="btn btn-secondary" id="bookAnotherBtn">
+                <i class="fa-solid fa-rotate-left"></i> Book Another Table
+              </button>
+              <a href="#menu" class="btn btn-primary">
+                <i class="fa-solid fa-utensils"></i> Browse Menu
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       7. OPENING HOURS & LIVE STATUS SECTION
+       ========================================================================= -->
+  <section class="section section-warm" id="hours">
+    <div class="container">
+      <div class="hours-card-container reveal-on-scroll">
+        <!-- Left info -->
+        <div class="hours-info-pane">
+          <span class="section-badge section-badge-gold">Service Schedule</span>
+          <h3>Kitchen Timetable & Live Service Status</h3>
+          <p style="color: var(--text-secondary); margin-bottom: 20px; line-height: 1.6;">
+            We prepare fresh batches twice daily. Walk-ins are always welcomed, though table reservations are advised during peak evening hours.
+          </p>
+
+          <!-- Dynamic Live Status Pill -->
+          <div id="liveHoursStatusPill" class="live-status-pill open">
+            <span class="live-dot"></span> Open Now – Closing at 10:30 PM
+          </div>
+
+          <div style="font-size: 0.86rem; color: var(--text-muted);">
+            <i class="fa-solid fa-clock-rotate-left"></i> Last food order taken 45 minutes prior to close. (Sri Lanka Time • GMT+5:30)
+          </div>
+        </div>
+
+        <!-- Right Timetable -->
+        <div class="hours-table-pane">
+          <div class="hours-table">
+            <div class="hours-row" data-day="1">
+              <span class="hours-day">Monday</span>
+              <span class="hours-time">11:30 AM – 10:30 PM</span>
+            </div>
+            <div class="hours-row" data-day="2">
+              <span class="hours-day">Tuesday</span>
+              <span class="hours-time">11:30 AM – 10:30 PM</span>
+            </div>
+            <div class="hours-row" data-day="3">
+              <span class="hours-day">Wednesday</span>
+              <span class="hours-time">11:30 AM – 10:30 PM</span>
+            </div>
+            <div class="hours-row" data-day="4">
+              <span class="hours-day">Thursday</span>
+              <span class="hours-time">11:30 AM – 10:30 PM</span>
+            </div>
+            <div class="hours-row" data-day="5">
+              <span class="hours-day">Friday (Late Night)</span>
+              <span class="hours-time">11:30 AM – 11:30 PM</span>
+            </div>
+            <div class="hours-row" data-day="6">
+              <span class="hours-day">Saturday Brunch & Dinner</span>
+              <span class="hours-time">10:00 AM – 11:30 PM</span>
+            </div>
+            <div class="hours-row" data-day="0">
+              <span class="hours-day">Sunday Family Roast</span>
+              <span class="hours-time">10:00 AM – 9:30 PM</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       8. CUSTOMER TESTIMONIALS SECTION
+       ========================================================================= -->
+  <section class="section" id="reviews">
+    <div class="container">
+      <div class="section-header reveal-on-scroll">
+        <span class="section-badge">Verified Diners</span>
+        <h2 class="section-title">What Our Guests <span class="text-coral">Are Saying</span></h2>
+        <p class="section-subtitle">Real experiences shared by food critics, neighborhood regulars, and celebratory guests.</p>
+      </div>
+
+      <div class="testimonials-grid">
+        <!-- Testimonial 1 -->
+        <div class="testimonial-card reveal-on-scroll">
+          <div class="testimonial-rating">
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+          </div>
+          <p class="testimonial-quote">
+            "MiniKitchen balances playful aesthetics with serious culinary technique. The Artisan Golden Sunrise Burger and Tonkotsu ramen broth are world-class."
+          </p>
+          <div class="testimonial-author-box">
+            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80" alt="Chef Alexander Croft" class="testimonial-avatar">
+            <div class="author-details">
+              <h4>Priya Jayawardena</h4>
+              <p>Food Columnist • Colombo 07</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Testimonial 2 -->
+        <div class="testimonial-card reveal-on-scroll delay-1">
+          <div class="testimonial-rating">
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+          </div>
+          <p class="testimonial-quote">
+            "The ambiance is breathtaking! Warm coral tones, cozy lighting, and the service was so gracious. Booked our anniversary table online seamlessly."
+          </p>
+          <div class="testimonial-author-box">
+            <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=150&q=80" alt="Dilani & Kasun Mendis" class="testimonial-avatar">
+            <div class="author-details">
+              <h4>Dilani &amp; Kasun Mendis</h4>
+              <p>Verified Diners • Mount Lavinia</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Testimonial 3 -->
+        <div class="testimonial-card reveal-on-scroll delay-2">
+          <div class="testimonial-rating">
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+          </div>
+          <p class="testimonial-quote">
+            "The truffle parmesan fries and buttermilk chicken tenders are addictive. Easily the top dining destination in the district right now."
+          </p>
+          <div class="testimonial-author-box">
+            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80" alt="Ruwan Senaratne" class="testimonial-avatar">
+            <div class="author-details">
+              <h4>Ruwan Senaratne</h4>
+              <p>Gastronomy Blogger • Kandy</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       9. CONTACT & LOCATION SECTION
+       ========================================================================= -->
+  <section class="section section-warm" id="contact">
+    <div class="container">
+      <div class="section-header reveal-on-scroll">
+        <span class="section-badge">Find Our Kitchen</span>
+        <h2 class="section-title">Visit & <span class="text-coral">Connect</span></h2>
+        <p class="section-subtitle">Drop by our welcoming dining room or get in touch for private catering and events.</p>
+      </div>
+
+      <div class="contact-grid">
+        <!-- Left Contact Info Cards -->
+        <div class="contact-cards-column reveal-on-scroll">
+          <div class="contact-card-list">
+            <!-- Address Tile -->
+            <div class="contact-info-tile">
+              <div class="contact-tile-icon"><i class="fa-solid fa-location-dot"></i></div>
+              <div class="contact-tile-text">
+                <h4>Our Address</h4>
+                <p>45 Galle Road,<br>Colombo 03, Western Province, Sri Lanka</p>
+              </div>
+            </div>
+
+            <!-- Phone Tile -->
+            <div class="contact-info-tile">
+              <div class="contact-tile-icon"><i class="fa-solid fa-phone"></i></div>
+              <div class="contact-tile-text">
+                <h4>Direct Phone</h4>
+                <p>+94 11 234 5678<br>Daily 10am – 11pm (IST)</p>
+              </div>
+            </div>
+
+            <!-- Email Tile -->
+            <div class="contact-info-tile">
+              <div class="contact-tile-icon"><i class="fa-solid fa-envelope"></i></div>
+              <div class="contact-tile-text">
+                <h4>General Inquiries</h4>
+                <p>hello@minikitchen.lk<br>events@minikitchen.lk</p>
+              </div>
+            </div>
+
+            <!-- Valet Tile -->
+            <div class="contact-info-tile">
+              <div class="contact-tile-icon"><i class="fa-solid fa-square-parking"></i></div>
+              <div class="contact-tile-text">
+                <h4>Parking &amp; Transit</h4>
+                <p>Valet &amp; street parking on Galle Rd.<br>Bambalapitiya Station: 4 min walk</p>
+              </div>
+            </div>
+          </div>
+
+          <div style="background: #FFF; padding: 24px; border-radius: var(--radius-lg); border: 1px solid var(--border-light); display: flex; align-items: center; justify-content: space-between;">
+            <div>
+              <h4 style="font-size: 1.05rem; font-weight: 800; color: var(--text-main); margin-bottom: 4px;">Hosting a Private Dinner?</h4>
+              <p style="font-size: 0.86rem; color: var(--text-secondary);">Reserve our full mezzanine for up to 35 guests.</p>
+            </div>
+            <a href="#reservations" class="btn btn-primary btn-sm">Inquire Space</a>
+          </div>
+        </div>
+
+        <!-- Right Interactive Map Display -->
+        <div class="map-placeholder-box reveal-on-scroll delay-1">
+          <iframe 
+            title="MiniKitchen Colombo Restaurant Location Map"
+            src="https://maps.google.com/maps?q=45%20Galle%20Road%20Colombo%2003%20Sri%20Lanka&t=&z=15&ie=UTF8&iwloc=&output=embed" 
+            loading="lazy" 
+            referrerpolicy="no-referrer-when-downgrade">
+          </iframe>
+          <div class="map-overlay-badge">
+            <i class="fa-solid fa-utensils" style="color: var(--primary-coral);"></i>
+            <span>MiniKitchen Colombo 03</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       10. FOOTER
+       ========================================================================= -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <!-- Col 1: Brand & Bio -->
+        <div class="footer-col footer-brand">
+          <a href="index.html" class="brand-logo">
+            <div class="logo-icon"><i class="fa-solid fa-utensils"></i></div>
+            <span>Mini<span class="logo-accent">Kitchen</span></span>
+          </a>
+          <p>
+            A modern artisanal culinary sanctuary dedicated to handcrafted burgers, stone-baked pizzas, and heartwarming comfort dishes.
+          </p>
+          <div class="footer-social-links">
+            <a href="#" class="social-icon-btn" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+            <a href="#" class="social-icon-btn" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="#" class="social-icon-btn" aria-label="Twitter / X"><i class="fa-brands fa-x-twitter"></i></a>
+            <a href="#" class="social-icon-btn" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+          </div>
+        </div>
+
+        <!-- Col 2: Quick Links -->
+        <div class="footer-col">
+          <h4>Navigation</h4>
+          <ul class="footer-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#menu">Food Menu</a></li>
+            <li><a href="#about">About Our Kitchen</a></li>
+            <li><a href="#reservations">Table Reservations</a></li>
+            <li><a href="#hours">Opening Hours</a></li>
+            <li><a href="#contact">Contact &amp; Location</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 3: Specialties -->
+        <div class="footer-col">
+          <h4>Culinary Focus</h4>
+          <ul class="footer-links">
+            <li><a href="#menu">Artisan Wagyu Burgers</a></li>
+            <li><a href="#menu">Stone Oven Burrata Pizzas</a></li>
+            <li><a href="#menu">Tonkotsu Ramen Broths</a></li>
+            <li><a href="#menu">Buttermilk Fried Chicken</a></li>
+            <li><a href="#menu">Belgian Waffles & Cold Brew</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 4: Newsletter -->
+        <div class="footer-col footer-newsletter-box">
+          <h4>Join the Table</h4>
+          <p>Subscribe for secret weekly Chef specials, seasonal tastings, and priority table reservations.</p>
+          <form class="newsletter-form" id="newsletterForm">
+            <input type="email" placeholder="Your email address" required aria-label="Email for newsletter">
+            <button type="submit" class="btn btn-primary btn-sm">Join</button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Footer Bottom -->
+      <div class="footer-bottom">
+        <div>&copy; 2026 MiniKitchen Culinary Arts Co. All rights reserved.</div>
+        <div class="footer-bottom-links">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Service</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- =========================================================================
+       11. FLOATING AI CHATBOT INTERFACE ("MiniChef Assistant")
+       ========================================================================= -->
+  <!-- Floating Peek speech prompt bubble -->
+  <div class="chatbot-peek-bubble" id="chatbotPeekBubble">
+    <div class="peek-avatar"><i class="fa-solid fa-kitchen-set"></i></div>
+    <span>Craving something delicious? Ask MiniChef!</span>
+    <button class="chatbot-peek-close" id="chatbotPeekClose" aria-label="Dismiss chat greeting">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+  </div>
+
+  <!-- Main Floating Trigger Button -->
+  <button class="chatbot-trigger-btn" id="chatbotTriggerBtn" aria-label="Open AI Assistant Chatbot">
+    <i class="fa-solid fa-robot"></i>
+    <span class="chatbot-unread-dot"></span>
+  </button>
+
+  <!-- Chatbot Widget Window -->
+  <div class="chatbot-widget-window" id="chatbotWidgetWindow">
+    <!-- Header -->
+    <div class="chatbot-header">
+      <div class="bot-profile">
+        <div class="bot-avatar-box">
+          <i class="fa-solid fa-kitchen-set"></i>
+          <span class="bot-status-online-dot"></span>
+        </div>
+        <div class="bot-info">
+          <h4>MiniChef AI</h4>
+          <p>Online • Answers in seconds</p>
+        </div>
+      </div>
+
+      <div class="chat-header-actions">
+        <button class="chat-header-btn" id="chatbotResetBtn" title="Restart conversation">
+          <i class="fa-solid fa-rotate-right"></i>
+        </button>
+        <button class="chat-header-btn" id="chatbotCloseBtn" title="Close chat">
+          <i class="fa-solid fa-minus"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Messages Container -->
+    <div class="chat-messages-container" id="chatMessagesContainer">
+      <!-- Welcome message and user conversation bubbles injected here -->
+
+      <!-- Typing Indicator Bubble -->
+      <div class="typing-bubble" id="chatTypingBubble">
+        <span class="typing-dot"></span>
+        <span class="typing-dot"></span>
+        <span class="typing-dot"></span>
+      </div>
+    </div>
+
+    <!-- Quick Question Chips -->
+    <div class="quick-prompts-wrapper" id="chatQuickPrompts">
+      <button class="prompt-chip" data-prompt="What are today's chef specials?"><i class="fa-solid fa-utensils"></i> Today's Specials</button>
+      <button class="prompt-chip" data-prompt="I would like to book a table."><i class="fa-regular fa-calendar-check"></i> Book a Table</button>
+      <button class="prompt-chip" data-prompt="What are your opening hours?"><i class="fa-regular fa-clock"></i> Opening Hours</button>
+      <button class="prompt-chip" data-prompt="What vegan and allergy options do you have?"><i class="fa-solid fa-leaf"></i> Vegan &amp; Allergens</button>
+      <button class="prompt-chip" data-prompt="Where are you located and is there parking?"><i class="fa-solid fa-location-dot"></i> Location &amp; Parking</button>
+    </div>
+
+    <!-- Message Input Bar -->
+    <div class="chat-input-bar">
+      <input type="text" id="chatInputField" class="chat-input-field" placeholder="Ask about food, hours, or book a table..." autocomplete="off">
+      <button class="btn-chat-send" id="chatSendBtn" aria-label="Send message">
+        <i class="fa-solid fa-paper-plane"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       12. MODAL DIALOGS (Dish Details & Status Tracker)
+       ========================================================================= -->
+  <!-- Dish Details Modal -->
+  <div class="modal-backdrop" id="dishDetailsModal">
+    <div class="modal-content-box" style="max-width: 580px;">
+      <button class="modal-close-btn" id="dishModalCloseBtn"><i class="fa-solid fa-xmark"></i></button>
+      <div id="dishModalContent">
+        <!-- Injected dynamically -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Reservation Status Tracker Modal -->
+  <div class="modal-backdrop" id="statusTrackerModal">
+    <div class="modal-content-box" style="max-width: 500px;">
+      <button class="modal-close-btn" onclick="document.getElementById('statusTrackerModal').classList.remove('active')"><i class="fa-solid fa-xmark"></i></button>
+      <div class="status-tracker-box">
+        <h3>Track Reservation Status</h3>
+        <p>Enter the booking reference number (e.g., MK-8491) provided during your reservation request.</p>
+
+        <form id="statusLookupForm">
+          <div class="tracker-search-bar">
+            <input type="text" id="statusLookupInput" class="form-control" placeholder="Enter Ref Code (e.g. MK-8491)" required>
+            <button type="submit" class="btn btn-primary btn-sm">Lookup</button>
+          </div>
+        </form>
+
+        <div id="statusLookupResult" class="tracker-result-area">
+          <!-- Injected dynamically -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- JavaScript Libraries & Modules -->
+  <!-- Supabase CDN Client -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-config.js"></script>
+  <script src="js/state.js"></script>
+  <script src="js/app.js?v=2026.5"></script>
+  <script src="js/reservations.js"></script>
+  <script src="js/gemini-config.js"></script>
+  <script src="js/chatbot.js?v=2026.5"></script>
+</body>
+</html>
+
